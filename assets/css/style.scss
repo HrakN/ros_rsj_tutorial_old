@@ -1,0 +1,17 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+.outer {
+  max-width: 100%;
+}
+
+.inner {
+  max-width: 75%;
+}
+
+.highlight .gutter {
+  width: 50px;
+}
+

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -ue
+
+function set_date() {
+  TGT="${1}"
+  DATE=$(git log -1 --format="%ad" --date=format:"%Y-%m-%d" -- ${TGT})
+  echo "Setting modification time of ${1} to ${DATE}"
+  sed -i "s/date: .*$/date: ${DATE}/" "${TGT}"
+}
+
+for ii in $(ls *.md); do
+  set_date "${ii}"
+done
+
+exit 0

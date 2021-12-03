@@ -1,0 +1,20 @@
+title: ROSを使用した移動ロボットのナビゲーション
+description: 日本ロボット学会　第139回 ロボットの作り方セミナー
+theme: jekyll-theme-slate
+
+repo: "https://github.com/igra9/ros_rsj_tutorial"
+
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  syntax_highlighter_opts:
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
+
+exclude:
+  - README.md
+  - Gemfile
