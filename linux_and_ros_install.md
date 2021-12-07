@@ -222,7 +222,7 @@ $ which catkin_make
 $ source ~/.bashrc
 ```
 
-
+<a id="remotepc_wifi_settings"></a> 
 ### ネットワーク構成
 
 ![](images/turtlebot3/network_configuration.png)
@@ -265,103 +265,131 @@ $ source ~/.bashrc
 
 <!-- 2021/12/2 ここまで -->
 
-## 手順（TurtleBotメインコンピューター：Raspberry Pi 3 セットアップ）
+## 手順（TurtleBotメインコンピューター：Raspberry Pi 3+ セットアップ）
+<!-- https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup を参考して記述する 
 
+"WiFiネットワーク設定を構成する"を、Linux PCで実施する。
 
-{% capture notice_01 %}
+-->
+
 **警告**:
 - この章の内容は、**TurtleBot3 Burger**のメインコンピューターとなる `Raspberry Pi 3`に対応しています。 この指示をリモートPC（デスクトップPCまたは、ノートパソコン）で**実施しない**でください。
 - セットアップ作業には、電源と時間が必要なためバッテリーは適していません。この作業では、SMPS(ACアダプタ)の使用を推奨します。
-{% endcapture %}
 
-### RaspbianベースのLinuxをインストールする
 
-**警告**: Raspberry Pi 3にLinuxをインストールするには、SDカードに少なくとも**8GB**の空き容量が必要です。
-{: .notice--warning}
+139回ロボット工学セミナーにて実習キットを購入された方は、付属SDカードに適切なイメージが記録されているので、下の[WiFiネットワーク設定を構成する](#tb3_wifi_settings)を実施ください。
 
-RaspbianベースのLinuxディストリビューションイメージを提供しています。 それらはTurtleBot3に関連するROSおよびROSパッケージと共にプリインストールされています。 TurtleBot3 BurgerおよびWaffle Piモデルをサポートしています。 このディストリビューションイメージでは、Wolfram、Mathematica、Minecraft Pi、Oracle Java SEなどの非フリーソフトウェアが削除されています。
+もし、お持ちのTurtleBot3 BurgerにROS Melodicがインストールされていない場合、以下のHPより、Rasberry PiにROS Melodicのインストールを実施する必要があります。(画面上部のROSバージョン選択箇所において、'Melodic'を選択ください)
 
-#### リモートPCで
-- Raspbian for TurtleBot3に基づくLinuxディストリビューションイメージをダウンロードします。
-  - [ダウンロードリンク](http://www.robotis.com/service/download.php?no=1738)
-  - SHA256 (image_rpi_20190429.img.zip) : eb8173f3727db08087990b2c4e2bb211e70bd54644644834771fc8b971856b97
-  - SHA256 (image_rpi_20190429.img): 7a868c275169b1f02c04617cc0cce9654fd8222623c78b22d0a27c73a9609398
-- ダウンロード後、ダウンロードしたファイルを解凍します。
-- SDカードのイメージを書き込み手順
-  - [etcher.io](https://etcher.io/)にアクセスし、Etcher SDカードイメージユーティリティをダウンロードし、インストールします。
-  - Etcherを実行し、コンピューターまたはノートパソコンにダウンロードしたLinuxイメージを選択します。
-  - SDカードドライブを選択します。
-  - 書き込みを選択して、イメージをSDカードに転送します。
-- （他の書き込み方法）Linuxでは`dd`コマンドを使用できます。Windowsではアプリケーション`win32 Disk Imager`を使用できます。 完全な手順については、[こちら](https://elinux.org/RPi_Easy_SD_Card_Setup#Using_the_Linux_command_line)（Linuxユーザーの場合）および[こちら](https://elinux.org/RPi_Easy_SD_Card_Setup#Using_the_Win32DiskImager_program)（Windowsユーザーの場合）をご覧ください。
+ 3.2.1 "microSDカードとリーダーを準備する" ～ 3.2.4.2 "ディスクユーティリティ" まで実施ください。
 
-#### TurtleBot PCで
-*まだ電源に繋いでいないことを確認してください。*{: style="color: red"}
-- Raspberry PiをモニターにHDMIケーブルで接続し、キーボードとマウスをRaspberry Piに接続します。
-- SDカードをRaspberry Piに差し込みます。
-- 電源に繋いでください。
-- Raspbian OSのインストール後、ユーザー名**pi**とパスワード**turtlebot**でログインできます。 
-- SDカード全体を使用するようにファイルシステムを拡張します。
+https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup
 
-  ```shell
-  sudo raspi-config
-  (select 7 Advanced Options > A1 Expand Filesystem)
-  ```
 
-- [ワイヤレス・ネットワークへの接続ガイド](https://projects.raspberrypi.org/en/projects/raspberry-pi-using/3)
+<!-- ページ内リンクのおまじない -->
+<a id="tb3_wifi_settings"></a> 
+### WiFiネットワーク設定を構成する
 
-- ネットワークタイムプロトコル（NTP）サーバーにクエリを送信して、コンピューターの日付と時刻を同期および設定します。
+1. RaspberryPiを起動
 
-  ```shell
-  sudo apt-get install ntpdate
-  sudo ntpdate ntp.ubuntu.com
-  ```
+   以下の手順でRasberryPiを起動し、ログインします。
 
-- パスワード、ロケール、タイムゾーンを変更したい場合(オプション):
-  1. sudo raspi-config > 1 Change User Password
-  1. sudo raspi-config > 4 Localisation Options > I1 Change Locale
-  1. sudo raspi-config > 4 Localisation Options > I2 Change Timezone
+   - 入力デバイスをRaspberryPiのUSBポートに接続します。
+   - RasberryPi用起動イメージが格納されたmicroSDカードを挿入します。
+   - 電源を（USBまたはOpenCRのいずれかで）接続して、RaspberryPiをオンにします。
+   - ID "ubuntu"とパスワード "turtlebot"でログインします。
 
-- ROSのネットワーク設定
-　リモートPCのセットアップと同様([参照](#ネットワーク構成))にRasberry Pi 3のIPアドレスを調べる（`wlan0`の箇所）。
+     `Raspberry Piに電力を供給する前に、HDMIケーブルを接続する必要があります。接続しないと、RaspberryPiのHDMIポートが無効になります。`
+
+1. 設定ファイルの修正
+  
+   修正対象ファイルを開く。
+
+   ```shell
+   $ cd /etc/netplan
+   $ sudo nano 50-cloud-init.yaml
+   ```
+
+   エディターが開いたら、`WIFI_SSID`と`WIFI_PASSWORD`をWi-FiSSIDとパスワードに置き換えます。(下イメージ緑文字部分)
+
+  ![](images/seminar_no139/wifi_settings.png)
+
+ 修正後、ファイルを保存(`Ctrl + o` → `enter`)し、編集を終了（`Ctrl + x`）します。
+
+Rasberry Piを再起動します。
+
+   ```shell
+   $ sudo reboot
+   ```
+
+
+### ROSのネットワーク設定
+Rasberry Piの再起動後、リモートPCのセットアップと同様([参照](#remotepc_wifi_settings))にRasberry PiのIPアドレスを調べる（`wlan0`の箇所）。
    
    ```shell
-   ifconfig
+  $ ip address show
    ```
-   `ROS_MASTER_URI`と`ROS_HOSTNAME`の`localhost`のIPアドレスを、それぞれにリモートPCのIPアドレスと上記のターミナルウィンドウから取得したIPアドレスに変更します。
 
-	```shell
-	nano ~/.bashrc
+  エディタにて~/.bashrcを開きます。
 
-	export ROS_MASTER_URI=http://REMOTE_PC_IP_ADDRESS:11311
-	export ROS_HOSTNAME=RASPBERRY_PI_3_IP_ADDRESS
-	```
+  ```shell
+  $ nano ~/.bashrc
+  ```
 
-   ファイルを保存して（`Ctrl + o`{: style="border: 1px solid black" }→`enter`{: style="border: 1px solid black" }キー)閉じる（`Ctrl+x`{: style="border: 1px solid black" }）。
+下図のように、環境変数`ROS_MASTER_URI`と`ROS_HOSTNAME`のIPアドレスを、それぞれリモートPCのIPアドレスとRasberry Piから取得したIPアドレスに変更します。
 
-	```shell
-	source ~/.bashrc
-	```
+  ![](images/seminar_no139/wifi_ros_env.png)
 
-##### リモートPCでTurtleBot PCに接続方法
 
-- ワイヤレス構成が完了したら、デスクトップまたはノートパソコンからSSH経由でRaspberry Piに接続できます。
 
-   リモートPCとTurtleBot PCでSSHをインストールする。
+   ファイルを保存し（`Ctrl + o` → `enter`)、閉じる（`Ctrl+x`）。
+
+   さきほど修正した設定を反映するため、**~/.bashrcを編集したターミナルと同じターミナルにて、** 以下を実行します。
+   (~/.bashrcの修正により、今後、新規にターミナルを開いた時は自動で設定が反映されます)
+
+  ```shell
+	$ source ~/.bashrc
+  ```
+
+### リモートPCからTurtleBot PCへの接続方法
+
+ワイヤレス構成が完了したら、デスクトップまたはノートパソコンからSSH経由でRaspberry Piに接続できます。
+
+  まずは、リモートPCとTurtleBotでSSHをインストールする。
+
+  TurtleBotにログイン後、以下を実行する。
+
    ```shell
    sudo apt-get install ssh
    ```
 
-   TurtleBot PCでSSHを有効にする。
+   TurtleBotでSSHを有効にする。
    ```shell
    sudo service ssh start
    sudo ufw allow ssh
    ```
  
-  リモートPCでRasberry Piと接続する（セミナー当日で行う）。
+  リモートPCから、Rasberry Piに接続する。
+  リモートPCにログインし、以下を入力する。
 
   ```shell
-  ssh pi@192.168.xxx.xxx (The IP 192.168.xxx.xxx is your Raspberry Pi’s IP or hostname)
+  ssh ubuntu@192.168.YY.YY   (@の後はturtlebotのIPアドレス)
+  ubuntu@192.168.YY.YY's password: (パスワード "turtlebot" を入力)
+  (初めて接続する場合、接続を継続するかを問われるので、yesを入力する)
   ```
+
+ turtlebotに接続できればOK。
+
+ 接続できない場合、
+ - sshで指定しているIPアドレス、アカウント、パスワードに誤りがないか
+ - リモートPCとTurtleBotを同じwifiルーターに接続しているか
+ 
+ を確認する。
+
+ 以上で、事前準備は終了です。
+
+
+ <!-- 
 {% capture notice_03 %}
 
 **注釈**: **公式 Raspbian Stretchとの変更点**
@@ -384,3 +412,5 @@ RaspbianベースのLinuxディストリビューションイメージを提供�
 [pc_network_configuration]: /docs/en/platform/turtlebot3/pc_setup/#network-configuration
 [network_configuration]: #5-network-configuration
 [enable_ssh_server_in_raspberry_pi]: /docs/en/platform/turtlebot3/faq/#enable-ssh-server-in-raspberry-pi
+
+-->
