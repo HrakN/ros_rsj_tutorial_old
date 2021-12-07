@@ -229,24 +229,24 @@ $ source ~/.bashrc
 
 TurtleBot PCとリモートPCの間で通信をするためにIPアドレスが必要です。 **リモートPCとTurtleBot PCは、同じwifiルーターに接続する必要があります。**
 
-リモートPCのターミナルウィンドウで次のコマンドを入力し、リモートPCのIPアドレスを確認します。
+`リモートPC`のターミナルウィンドウで次のコマンドを入力し、リモートPCのIPアドレスを確認します。
 
 ```shell
 $ ip address show
 ```
 
 赤枠部分が、`リモートPC`のIPアドレスです。
-("/24"の部分は含みません)
+(例ですので、環境によってIPアドレスが異なります。また、"/24"の部分は含みません。)
 
 ![](images/seminar_no139/rosset_0_ip.png)
 
-以下のコマンドを入力します。
+以下のコマンドを入力し、~/.bashrcを開きます。
 
 ```shell
 $ nano ~/.bashrc
 ```
 
-`Alt + /`を入力するとファイルの最終行へ移動します。
+`Alt + /` を入力するとファイルの最終行へ移動します。
 
 `ROS_MASTER_URI`と`ROS_HOSTNAME`の`localhost`のIPアドレスを、上記のターミナルウィンドウから取得したIPアドレスに変更します。
 (下図、赤枠部分)
@@ -273,11 +273,11 @@ $ source ~/.bashrc
 -->
 
 **警告**:
-- この章の内容は、**TurtleBot3 Burger**のメインコンピューターとなる `Raspberry Pi 3`に対応しています。 この指示をリモートPC（デスクトップPCまたは、ノートパソコン）で**実施しない**でください。
+- この章の内容は、**TurtleBot3 Burger**のメインコンピューターとなる `Raspberry Pi 3+`に対応しています。 **本項の設定内容をリモートPC（デスクトップPCまたは、ノートパソコン）で実施しないでください。**
 - セットアップ作業には、電源と時間が必要なためバッテリーは適していません。この作業では、SMPS(ACアダプタ)の使用を推奨します。
 
 
-139回ロボット工学セミナーにて実習キットを購入された方は、付属SDカードに適切なイメージが記録されているので、下の[WiFiネットワーク設定を構成する](#tb3_wifi_settings)を実施ください。
+139回ロボット工学セミナーにて実習キットを購入された方は、付属のSDカードに適切なイメージが記録されているので、下の[WiFiネットワーク設定を構成する](#tb3_wifi_settings)を実施ください。
 
 もし、お持ちのTurtleBot3 BurgerにROS Melodicがインストールされていない場合、以下のHPより、Rasberry PiにROS Melodicのインストールを実施する必要があります。(画面上部のROSバージョン選択箇所において、'Melodic'を選択ください)
 
@@ -297,7 +297,7 @@ https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup
    - 入力デバイスをRaspberryPiのUSBポートに接続します。
    - RasberryPi用起動イメージが格納されたmicroSDカードを挿入します。
    - 電源を（USBまたはOpenCRのいずれかで）接続して、RaspberryPiをオンにします。
-   - ID "ubuntu"とパスワード "turtlebot"でログインします。
+   - アカウント "ubuntu"、パスワード "turtlebot"でログインします。
 
      `Raspberry Piに電力を供給する前に、HDMIケーブルを接続する必要があります。接続しないと、RaspberryPiのHDMIポートが無効になります。`
 
@@ -351,7 +351,7 @@ Rasberry Piの再起動後、リモートPCのセットアップと同様([参�
 	$ source ~/.bashrc
   ```
 
-### リモートPCからTurtleBot PCへの接続方法
+## リモートPCからTurtleBot PCへの接続方法
 
 ワイヤレス構成が完了したら、デスクトップまたはノートパソコンからSSH経由でRaspberry Piに接続できます。
 
@@ -360,22 +360,22 @@ Rasberry Piの再起動後、リモートPCのセットアップと同様([参�
   TurtleBotにログイン後、以下を実行する。
 
    ```shell
-   sudo apt-get install ssh
+   $ sudo apt-get install ssh
    ```
 
    TurtleBotでSSHを有効にする。
    ```shell
-   sudo service ssh start
-   sudo ufw allow ssh
+   $ sudo service ssh start
+   $ sudo ufw allow ssh
    ```
  
   リモートPCから、Rasberry Piに接続する。
   リモートPCにログインし、以下を入力する。
 
   ```shell
-  ssh ubuntu@192.168.YY.YY   (@の後はturtlebotのIPアドレス)
-  ubuntu@192.168.YY.YY's password: (パスワード "turtlebot" を入力)
-  (初めて接続する場合、接続を継続するかを問われるので、yesを入力する)
+  $ ssh ubuntu@192.168.YY.YY   (@の後はturtlebotのIPアドレス)
+   ubuntu@192.168.YY.YY's password: (パスワード "turtlebot" を入力)
+   (初めて接続する場合、接続を継続するかを問われるので、yesを入力する)
   ```
 
  turtlebotに接続できればOK。
@@ -384,7 +384,7 @@ Rasberry Piの再起動後、リモートPCのセットアップと同様([参�
  - sshで指定しているIPアドレス、アカウント、パスワードに誤りがないか
  - リモートPCとTurtleBotを同じwifiルーターに接続しているか
  
- を確認する。
+ を確認してください。
 
  以上で、事前準備は終了です。
 
