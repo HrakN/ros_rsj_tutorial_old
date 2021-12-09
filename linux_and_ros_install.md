@@ -148,7 +148,8 @@ date: 2021-01-12
 ターミナルウィンドウでこのスクリプトを実行します。ターミナルアプリケーションは、画面の左上隅にあるUbuntu検索アイコンから起動できます。もしくは、ターミナルのショートカットキー`Ctrl+Alt+t`を使用して起動できます。 ROSをインストールした後、リモートPCを再起動してください。
 <br><br>
 
-```shell:リモートPCで実施
+#### **`【リモートPCで実施】`**
+```shell
 $ sudo apt-get update
 $ sudo apt-get upgrade
 $ wget https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_tools/master/install_ros_melodic.sh
@@ -176,7 +177,8 @@ $ bash ./install_ros_melodic.sh
 
 リモートPCにROS依存パッケージをインストールする手順です。<br><br>
 
-```shell:リモートPCで実施
+#### **`【リモートPCで実施】`**
+```shell
 $ sudo apt-get install ros-melodic-joy ros-melodic-teleop-twist-joy \
   ros-melodic-teleop-twist-keyboard ros-melodic-laser-proc \
   ros-melodic-rgbd-launch ros-melodic-depthimage-to-laserscan \
@@ -191,7 +193,8 @@ $ sudo apt-get install ros-melodic-joy ros-melodic-teleop-twist-joy \
 リモートPCにTurtleBot3を制御するための依存パッケージをインストールする手順です。
 <br><br>
 
-```shell:リモートPCで実施
+#### **`【リモートPCで実施】`**
+```shell
 $ sudo apt-get install ros-melodic-dynamixel-sdk
 $ sudo apt-get install ros-melodic-turtlebot3-msgs
 $ sudo apt-get install ros-melodic-turtlebot3
@@ -201,7 +204,8 @@ $ sudo apt-get install ros-melodic-turtlebot3
 
 環境変数`TURTLEBOT3_MODEL`モデルにデフォルト名を設定します。以下のコマンドを端末に入力し、環境変数の設定と反映を行います。
 
-```shell:リモートPCで実施
+#### **`【リモートPCで実施】`**
+```shell
 $ echo "export TURTLEBOT3_MODEL=burger" >> ~/.bashrc
 $ source ~/.bashrc
 ```
@@ -209,13 +213,16 @@ $ source ~/.bashrc
 `catkin_make`コマンドへのパスが通っていることを確認します。<br>
 以下のコマンドを実行後、"/opt/ros/melodic/bin/catkin_make"といったパスが表示されれば、正しく設定できています。
 
-```shell:リモートPCで実施
+#### **`【リモートPCで実施】`**
+```shell
 $ which catkin_make
 ```
 
 何も表示されない場合、環境変数設定に不備が考えられるため、以下のコマンドを再実行してください。
 
-```shell:リモートPCで実施
+
+#### **`【リモートPCで実施】`**
+```shell
 $ source ~/.bashrc
 ```
 
@@ -229,7 +236,8 @@ TurtleBot PCとリモートPCの間で通信をするためにIPアドレスが�
 `リモートPC`のターミナルウィンドウで次のコマンドを入力し、リモートPCのIPアドレスを確認します。
 <br>
 
-```shell:リモートPCで実施
+#### **`【リモートPCで実施】`**
+```shell
 $ ip address show
 ```
 
@@ -240,7 +248,8 @@ $ ip address show
 
 以下のコマンドを入力し、~/.bashrcを開きます。
 
-```shell:リモートPCで実施
+*【リモートPCで実施】*
+```shell
 $ nano ~/.bashrc
 ```
 
@@ -255,7 +264,8 @@ $ nano ~/.bashrc
 
 次に、以下のコマンドでbashrcを実行します。
 
-```shell:リモートPCで実施
+#### **`【リモートPCで実施】`**
+```shell
 $ source ~/.bashrc
 ```
 
@@ -298,8 +308,8 @@ https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup
   
    修正対象ファイルを開く。
 
-
-   ```shell:SBCで実施
+   #### **`【SBCで実施】`**
+   ```shell
    $ cd /etc/netplan
    $ sudo nano 50-cloud-init.yaml
    ```
@@ -312,20 +322,23 @@ https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup
 
    SBCを再起動します。
 
-   ```shell:SBCで実施
+   #### **`【SBCで実施】`**
+   ```shell
    $ sudo reboot
    ```
 
 ### ROSのネットワーク設定
 SBCの再起動後、リモートPCのセットアップと同様([参照](#remotepc_wifi_settings))にSBCのIPアドレスを調べる（`wlan0`の箇所）。
    
-```shell:SBCで実施
+#### **`【SBCで実施】`**
+```shell
 $ ip address show
 ```
 
 エディタにて~/.bashrcを開きます。
 
-```shell:SBCで実施
+#### **`【SBCで実施】`**
+```shell
 $ nano ~/.bashrc
 ```
 
@@ -340,7 +353,8 @@ $ nano ~/.bashrc
 さきほど修正した設定を反映するため、**~/.bashrcを編集したターミナルにて、** 以下を実行します。
 (~/.bashrcの修正により、今後、新規にターミナルを開いた時は自動で設定が反映されます)
 
-```shell:SBCで実施
+#### **`【SBCで実施】`**
+```shell
 $ source ~/.bashrc
 ```
 
@@ -352,13 +366,15 @@ $ source ~/.bashrc
 
 SBCにログイン後、以下を実行する。
 
-```shell:SBCで実施
+#### **`【SBCで実施】`**
+```shell
 $ sudo apt-get install ssh
 ```
 
 SBCでSSHを有効にする。
 
-```shell:SBCで実施
+#### **`【SBCで実施】`**
+```shell
 $ sudo service ssh start
 $ sudo ufw allow ssh
 ```
@@ -366,7 +382,8 @@ $ sudo ufw allow ssh
 リモートPCから、SBCに接続する。
 リモートPCにログインし、以下を入力する。
 
-```shell-session:リモートPCで実施
+#### **`【SBCで実施】`**
+```shell-session
 $ ssh ubuntu@192.168.YY.YY   (@の後はSBCのIPアドレス)
  ubuntu@192.168.YY.YY\'s password: (パスワード "turtlebot" を入力)
  (初めて接続する場合、接続を継続するかを問われるので、yesを入力する)
@@ -387,7 +404,7 @@ SBCに接続できれば、設定は問題なくできています。
 
 ---
 
-### ご参考
+## ご参考
 昨年度の" ロボットの作り方セミナー"にて、発生した問題についてまとめたテキストは以下になります。
 ロボットが正常に動作しない場合に参考になさってください。
 
