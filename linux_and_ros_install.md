@@ -148,7 +148,7 @@ date: 2021-01-12
 ターミナルウィンドウでこのスクリプトを実行します。ターミナルアプリケーションは、画面の左上隅にあるUbuntu検索アイコンから起動できます。もしくは、ターミナルのショートカットキー`Ctrl+Alt+t`を使用して起動できます。 ROSをインストールした後、リモートPCを再起動してください。
 <br><br>
 
-【リモートPCで実施】
+*【リモートPCで実施】*
 ```shell
 $ sudo apt-get update
 $ sudo apt-get upgrade
@@ -177,7 +177,7 @@ $ bash ./install_ros_melodic.sh
 
 リモートPCにROS依存パッケージをインストールする手順です。<br><br>
 
-【リモートPCで実施】
+*【リモートPCで実施】*
 ```shell
 $ sudo apt-get install ros-melodic-joy ros-melodic-teleop-twist-joy \
   ros-melodic-teleop-twist-keyboard ros-melodic-laser-proc \
@@ -193,7 +193,7 @@ $ sudo apt-get install ros-melodic-joy ros-melodic-teleop-twist-joy \
 リモートPCにTurtleBot3を制御するための依存パッケージをインストールする手順です。
 <br><br>
 
-【リモートPCで実施】
+*【リモートPCで実施】*
 ```shell
 $ sudo apt-get install ros-melodic-dynamixel-sdk
 $ sudo apt-get install ros-melodic-turtlebot3-msgs
@@ -204,9 +204,7 @@ $ sudo apt-get install ros-melodic-turtlebot3
 
 環境変数`TURTLEBOT3_MODEL`モデルにデフォルト名を設定します。以下のコマンドを端末に入力し、環境変数の設定と反映を行います。
 
-<br>
-
-【リモートPCで実施】
+*【リモートPCで実施】*
 ```shell
 $ echo "export TURTLEBOT3_MODEL=burger" >> ~/.bashrc
 $ source ~/.bashrc
@@ -215,17 +213,15 @@ $ source ~/.bashrc
 `catkin_make`コマンドへのパスが通っていることを確認します。<br>
 以下のコマンドを実行後、"/opt/ros/melodic/bin/catkin_make"といったパスが表示されれば、正しく設定できています。
 
-<br>
-
-【リモートPCで実施】
+*【リモートPCで実施】*
 ```shell
 $ which catkin_make
 ```
 
 何も表示されない場合、環境変数設定に不備が考えられるため、以下のコマンドを再実行してください。
-<br>
 
-【リモートPCで実施】
+
+*【リモートPCで実施】*
 ```shell
 $ source ~/.bashrc
 ```
@@ -240,7 +236,7 @@ TurtleBot PCとリモートPCの間で通信をするためにIPアドレスが�
 `リモートPC`のターミナルウィンドウで次のコマンドを入力し、リモートPCのIPアドレスを確認します。
 <br>
 
-【リモートPCで実施】
+*【リモートPCで実施】*
 ```shell
 $ ip address show
 ```
@@ -252,7 +248,7 @@ $ ip address show
 
 以下のコマンドを入力し、~/.bashrcを開きます。
 
-【リモートPCで実施】
+*【リモートPCで実施】*
 ```shell
 $ nano ~/.bashrc
 ```
@@ -268,7 +264,7 @@ $ nano ~/.bashrc
 
 次に、以下のコマンドでbashrcを実行します。
 
-【リモートPCで実施】
+*【リモートPCで実施】*
 ```shell
 $ source ~/.bashrc
 ```
@@ -276,11 +272,11 @@ $ source ~/.bashrc
 以上でリモートPCの開発環境構築は完了です。
 
 
-## 手順（TurtleBotメインコンピューター：Raspberry Pi 3+ セットアップ）
+## 手順（TurtleBot制御コンピューター：Raspberry Pi 3+ セットアップ）
 
 
 >**警告**
->- この章の内容は、**TurtleBot3 Burger**のメインコンピューターとなる `Raspberry Pi 3+(Raspberry Pi)`に対応しています。 **本項の設定内容をリモートPC（デスクトップPCまたは、ノートパソコン）で実施しないでください。**
+>- この章の内容は、**TurtleBot3 Burger**の制御コンピューターとなる `Raspberry Pi 3+(Raspberry Pi)`に対応しています。 **本項の設定内容をリモートPC（デスクトップPCまたは、ノートパソコン）で実施しないでください。**
 >- セットアップ作業には、電源と時間が必要なためバッテリーは適していません。この作業では、SMPS(ACアダプタ)の使用を推奨します。
 
 
@@ -312,7 +308,8 @@ https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup
   
    修正対象ファイルを開く。
 
-  【SBC側で実施】
+
+   *【SBC側で実施】*
    ```shell
    $ cd /etc/netplan
    $ sudo nano 50-cloud-init.yaml
@@ -320,29 +317,29 @@ https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup
 
    エディターが開いたら、`WIFI_SSID`と`WIFI_PASSWORD`をWi-FiSSIDとパスワードに置き換えます。(下イメージ緑文字部分)
 
-  ![](images/seminar_no139/wifi_settings.png)
+   ![](images/seminar_no139/wifi_settings.png)
 
-  修正後、ファイルを保存(`Ctrl + o` → `enter`)し、編集を終了（`Ctrl + x`）します。
+   修正後、ファイルを保存(`Ctrl + o` → `enter`)し、編集を終了（`Ctrl + x`）します。
 
-  SBCを再起動します。
+   SBCを再起動します。
 
-  【SBCで実施】
+   *【SBCで実施】*
 
-  ```shell
-  $ sudo reboot
-  ```
+   ```shell
+   $ sudo reboot
+   ```
 
 ### ROSのネットワーク設定
 SBCの再起動後、リモートPCのセットアップと同様([参照](#remotepc_wifi_settings))にSBCのIPアドレスを調べる（`wlan0`の箇所）。
    
-【SBCで実施】
+*【SBCで実施】*
 ```shell
 $ ip address show
 ```
 
 エディタにて~/.bashrcを開きます。
 
-【SBCで実施】
+*【SBCで実施】*
 ```shell
 $ nano ~/.bashrc
 ```
@@ -353,12 +350,12 @@ $ nano ~/.bashrc
 
 
 
-ファイルを保存し（`Ctrl + o` → `enter`)、閉じる（`Ctrl+x`）。
+ファイルを保存し（`Ctrl + o` → `enter`)、閉じる（`Ctrl + x`）。
 
-さきほど修正した設定を反映するため、**~/.bashrcを編集したターミナルと同じターミナルにて、** 以下を実行します。
+さきほど修正した設定を反映するため、**~/.bashrcを編集したターミナルにて、** 以下を実行します。
 (~/.bashrcの修正により、今後、新規にターミナルを開いた時は自動で設定が反映されます)
 
-【SBCで実施】
+*【SBCで実施】*
 ```shell
 $ source ~/.bashrc
 ```
@@ -371,14 +368,14 @@ $ source ~/.bashrc
 
 SBCにログイン後、以下を実行する。
 
-【SBCで実施】
+*【SBCで実施】*
 ```shell
 $ sudo apt-get install ssh
 ```
 
 SBCでSSHを有効にする。
 
-【SBCで実施】
+*【SBCで実施】*
 ```shell
 $ sudo service ssh start
 $ sudo ufw allow ssh
@@ -387,10 +384,10 @@ $ sudo ufw allow ssh
 リモートPCから、SBCに接続する。
 リモートPCにログインし、以下を入力する。
 
-【リモートPCで実施】
+*【リモートPCで実施】*
 ```shell
 $ ssh ubuntu@192.168.YY.YY   (@の後はSBCのIPアドレス)
- ubuntu@192.168.YY.YY's password: (パスワード "SBC" を入力)
+ ubuntu@192.168.YY.YY\'s password: (パスワード "turtlebot" を入力)
  (初めて接続する場合、接続を継続するかを問われるので、yesを入力する)
 ```
 
@@ -407,6 +404,7 @@ SBCに接続できれば、設定は問題なくできています。
 
 
  <!-- 
+
 {% capture notice_03 %}
 
 **注釈**: **公式 Raspbian Stretchとの変更点**
