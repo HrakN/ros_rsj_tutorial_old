@@ -148,8 +148,7 @@ date: 2021-01-12
 ターミナルウィンドウでこのスクリプトを実行します。ターミナルアプリケーションは、画面の左上隅にあるUbuntu検索アイコンから起動できます。もしくは、ターミナルのショートカットキー`Ctrl+Alt+t`を使用して起動できます。 ROSをインストールした後、リモートPCを再起動してください。
 <br><br>
 
-*【リモートPCで実施】*
-```shell
+```shell:リモートPCで実施
 $ sudo apt-get update
 $ sudo apt-get upgrade
 $ wget https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_tools/master/install_ros_melodic.sh
@@ -177,8 +176,7 @@ $ bash ./install_ros_melodic.sh
 
 リモートPCにROS依存パッケージをインストールする手順です。<br><br>
 
-*【リモートPCで実施】*
-```shell
+```shell:リモートPCで実施
 $ sudo apt-get install ros-melodic-joy ros-melodic-teleop-twist-joy \
   ros-melodic-teleop-twist-keyboard ros-melodic-laser-proc \
   ros-melodic-rgbd-launch ros-melodic-depthimage-to-laserscan \
@@ -193,8 +191,7 @@ $ sudo apt-get install ros-melodic-joy ros-melodic-teleop-twist-joy \
 リモートPCにTurtleBot3を制御するための依存パッケージをインストールする手順です。
 <br><br>
 
-*【リモートPCで実施】*
-```shell
+```shell:リモートPCで実施
 $ sudo apt-get install ros-melodic-dynamixel-sdk
 $ sudo apt-get install ros-melodic-turtlebot3-msgs
 $ sudo apt-get install ros-melodic-turtlebot3
@@ -204,8 +201,7 @@ $ sudo apt-get install ros-melodic-turtlebot3
 
 環境変数`TURTLEBOT3_MODEL`モデルにデフォルト名を設定します。以下のコマンドを端末に入力し、環境変数の設定と反映を行います。
 
-*【リモートPCで実施】*
-```shell
+```shell:リモートPCで実施
 $ echo "export TURTLEBOT3_MODEL=burger" >> ~/.bashrc
 $ source ~/.bashrc
 ```
@@ -213,16 +209,13 @@ $ source ~/.bashrc
 `catkin_make`コマンドへのパスが通っていることを確認します。<br>
 以下のコマンドを実行後、"/opt/ros/melodic/bin/catkin_make"といったパスが表示されれば、正しく設定できています。
 
-*【リモートPCで実施】*
-```shell
+```shell:リモートPCで実施
 $ which catkin_make
 ```
 
 何も表示されない場合、環境変数設定に不備が考えられるため、以下のコマンドを再実行してください。
 
-
-*【リモートPCで実施】*
-```shell
+```shell:リモートPCで実施
 $ source ~/.bashrc
 ```
 
@@ -236,8 +229,7 @@ TurtleBot PCとリモートPCの間で通信をするためにIPアドレスが�
 `リモートPC`のターミナルウィンドウで次のコマンドを入力し、リモートPCのIPアドレスを確認します。
 <br>
 
-*【リモートPCで実施】*
-```shell
+```shell:リモートPCで実施
 $ ip address show
 ```
 
@@ -248,8 +240,7 @@ $ ip address show
 
 以下のコマンドを入力し、~/.bashrcを開きます。
 
-*【リモートPCで実施】*
-```shell
+```shell:リモートPCで実施
 $ nano ~/.bashrc
 ```
 
@@ -264,8 +255,7 @@ $ nano ~/.bashrc
 
 次に、以下のコマンドでbashrcを実行します。
 
-*【リモートPCで実施】*
-```shell
+```shell:リモートPCで実施
 $ source ~/.bashrc
 ```
 
@@ -309,8 +299,7 @@ https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup
    修正対象ファイルを開く。
 
 
-   *【SBC側で実施】*
-   ```shell
+   ```shell:SBCで実施
    $ cd /etc/netplan
    $ sudo nano 50-cloud-init.yaml
    ```
@@ -323,24 +312,20 @@ https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup
 
    SBCを再起動します。
 
-   *【SBCで実施】*
-
-   ```shell
+   ```shell:SBCで実施
    $ sudo reboot
    ```
 
 ### ROSのネットワーク設定
 SBCの再起動後、リモートPCのセットアップと同様([参照](#remotepc_wifi_settings))にSBCのIPアドレスを調べる（`wlan0`の箇所）。
    
-*【SBCで実施】*
-```shell
+```shell:SBCで実施
 $ ip address show
 ```
 
 エディタにて~/.bashrcを開きます。
 
-*【SBCで実施】*
-```shell
+```shell:SBCで実施
 $ nano ~/.bashrc
 ```
 
@@ -355,8 +340,7 @@ $ nano ~/.bashrc
 さきほど修正した設定を反映するため、**~/.bashrcを編集したターミナルにて、** 以下を実行します。
 (~/.bashrcの修正により、今後、新規にターミナルを開いた時は自動で設定が反映されます)
 
-*【SBCで実施】*
-```shell
+```shell:SBCで実施
 $ source ~/.bashrc
 ```
 
@@ -368,15 +352,13 @@ $ source ~/.bashrc
 
 SBCにログイン後、以下を実行する。
 
-*【SBCで実施】*
-```shell
+```shell:SBCで実施
 $ sudo apt-get install ssh
 ```
 
 SBCでSSHを有効にする。
 
-*【SBCで実施】*
-```shell
+```shell:SBCで実施
 $ sudo service ssh start
 $ sudo ufw allow ssh
 ```
@@ -384,8 +366,7 @@ $ sudo ufw allow ssh
 リモートPCから、SBCに接続する。
 リモートPCにログインし、以下を入力する。
 
-*【リモートPCで実施】*
-```shell
+```shell-session:リモートPCで実施
 $ ssh ubuntu@192.168.YY.YY   (@の後はSBCのIPアドレス)
  ubuntu@192.168.YY.YY\'s password: (パスワード "turtlebot" を入力)
  (初めて接続する場合、接続を継続するかを問われるので、yesを入力する)
@@ -401,4 +382,117 @@ SBCに接続できれば、設定は問題なくできています。
 を確認してください。
 
 以上で、事前準備は終了です。
+
+<br>
+
+---
+
+### ご参考
+昨年度の" ロボットの作り方セミナー"にて、発生した問題についてまとめたテキストは以下になります。
+ロボットが正常に動作しない場合に参考になさってください。
+
+```
+RSJロボット工学セミナー 第131回 レポート
+
+Issue
+ロボットとPCが通信できない。(ロボットが動作しない)
+1. ROS_MASTER_URI、ROS_HOSTNAME(ROS_IP)が間違っている。
+解決方法：適切な値に変更する。
+
+2. 同一ネットワーク上にノードがない。(VMを使用した時に発生しやすい)
+解決方法：同一ネットワーク上に配置する。
+
+3. USBが断線している
+解決方法：USBケーブルを挿し直す。OpenCRとRaspberryPiのUSBが抜けている事が多かった。
+
+4. OpenCRのセットアップが終わっていない
+解決方法：以下の手順を再度やり直す。
+
+https://emanual.robotis.com/docs/en/platform/turtlebot3/opencr_setup/#opencr-setup
+
+5. Dynamixelのケーブルが断線している
+解決方法：ケーブルを挿し直す。
+
+6. DYNAMIXELがブート(LEDは点灯)しているが動作しない。
+解決方法：DYNAMIXEL Wizrd2.0を使用して再設定する。
+
+※根本的な原因は不明だが、OpenCRのスイッチを押してDYNAMXIELの動作確認をする時にまれに変更される場合がある。
+
+7. シミュレーションが動作しない
+解決方法：初回起動で時間がかかっている場合が多い。
+
+8. ビルドエラーが起きる。
+解決方法：必要なパッケージがインストールされていない。
+
+セットアップ手順をやり直す。
+
+https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#pc-setup
+
+もしくはrosdepを使って依存関係を解決する。
+
+$ sudo apt-get install python-rosdep
+$ rosdep init
+$ rosdep update
+$ rosdep install -i --from-paths path-to-ros-package
+9. ノードを起動するとエラーが起きる。
+解決方法：必要なパッケージがインストールされていない。
+
+セットアップ手順をやり直す。
+
+https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#pc-setup
+
+もしくはrosdepを使って依存関係を解決する。
+
+$ sudo apt-get install python-rosdep
+$ rosdep init
+$ rosdep update
+$ rosdep install -i --from-paths path-to-ros-package
+10. テレオペコマンドで前後逆に動作する。
+解決方法：DYNAMIXELが左右逆に取り付けられているため、ハードウェアを組み直す。
+
+https://emanual.robotis.com/docs/en/platform/turtlebot3/hardware_setup/#hardware-assembly
+
+11. ノードは起動するが動作しない。
+解決方法：PCとロボットの時刻がずれている。
+
+ntpdateを使って同期する。
+
+$ sudo apt-get install ntpdate
+$ sudo ntpdate ntp.ubuntu.com
+手動の場合は以下のコマンドで設定する。
+
+$ date -s "01/22 13:00:00 2021"
+12. ロボットモデルが読み込まれない。
+解決方法：ロボットモデルの設定を読み込み直す。
+
+$ export TURTLEBOT3_MODEL=burger
+13. ネットワークの設定はあっているが動作しない
+解決方法：.bashrcを読み込み直す。
+
+$ source ~/.bashrc
+※.bashrcは、ターミナルの起動時に読み込まれるので変更してから読み込み直さないと適応されない。
+
+14. ROSのコマンドが使えない。
+解決方法：ROSの環境設定を再度実施する。
+
+$ source /opt/ros/<distro>/setup.bash
+気づいた事
+セットアップの手順が抜けていて失敗するケースが多い。
+
+ネットワークの設定に失敗しているケースが多め。
+
+次回に向けて改善してた方がいいこと¶
+初期設定が想定通りに完了していることを確認する手順があるといい。
+
+その他
+セミナーの資料とセミナーで使用したコードをアップ
+https://drive.google.com/drive/folders/1Z-5v747b3DJ_q0wX1W8yYGJh5KfFktKi?usp=sharing
+
+コードは、以下にあるものと同様。
+https://github.com/igra9/rsj_seminar_2021_navigation.git
+コミットID：d6d679206fb7988a97be8e6db9d0c1091487b515
+
+セミナーの資料は、以下にあるものと同様。(1年ほどでサイトが消える可能性あり)
+https://igra9.github.io/ros_rsj_tutorial/obstacle-detection.html
+```
 
