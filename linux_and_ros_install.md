@@ -22,19 +22,18 @@ date: 2021-01-12
 - マウス
 - 容量 4GB 以上の空 SDカード
 
-## 手順（リモートPCセットアップ）
+## リモートPCセットアップ
 
 ### Ubuntu Linux のダウンロード
 
 下記URLから Ubuntu 18.04 64bit Desktopのインストールイメージ、`ubuntu-18.04.x-desktop-amd64.iso`(xはバージョン番号)をダウンロードします。
 
+   [Ubuntu 18.04 Bionic](http://jp.releases.ubuntu.com/bionic/)
+
 * 本セミナーでは Ubuntu 18.04 64bit Desktop 版の使用を想定し、説明します
 * ネットワーク環境によっては、インストールイメージのリンクをクリック後、実際にダウンロード開始するまで、10分ほど必要な場合があるようです
   <!-- https://ubuntu-news.org/2021/09/17/ubuntu-18-04-6-lts-released/ -->
    
-
-   [Ubuntu 18.04 Bionic](http://jp.releases.ubuntu.com/bionic/)
-
    ![Ubuntu ダウンロード](images/seminar_no139/download_ubuntu18.04_0.png)
 
 
@@ -72,8 +71,7 @@ date: 2021-01-12
 
    ![Windows UAC](images/windows_uac.png)
 
-1. UNetbootin の画面で、「ディスクイメージ」を選択し、「…」ボタンをクリックして先ほどダウンロードした`ubuntu-18.04.x-desktop-amd64.iso` ファイルを選択します。<br>
-(x はダウンロードしたファイル名に合わせて変更ください)
+1. UNetbootin の画面で、「ディスクイメージ」を選択し、「…」ボタンをクリックして先ほどダウンロードした`ubuntu-18.04.x-desktop-amd64.iso` ファイルを選択します。(x はダウンロードしたファイルに合わせて変更ください)<br>
 
     また、「スペースは、リブートしてもファイルを維持するために使用」欄に「4096」と入力し、「ドライブ」欄で、使用する USB メモリのドライブ名を選択します。<br>
   内容を確認後、「OK」をクリックしてください。
@@ -83,7 +81,7 @@ date: 2021-01-12
    書き込み完了までしばらく待機します。<br>
    USB2.0 の場合10分以上、書き込み速度の遅いメモリだと30分程度かかる場合があります。<br>
 
-   また、以下のように、文字が描画されていないウィンドウが表示されることがあるようですが、ウィンドウ右上の「x」ボタンにより、閉じても問題ないようです。
+   また、以下のように、文字が描画されていないウィンドウが表示されることがあるようですが、ウィンドウ右上の「x」ボタンにより、ウィンドウを閉じても問題ないようです。
 
    ![UNetbootin empty window](images/seminar_no139/unetbootin_empty_window.png)
 
@@ -117,7 +115,7 @@ date: 2021-01-12
 
 1. Live USB をパソコンに接続し、パソコンの電源を入れます。
 
-1. "GNU GRUB"のメニューが表示されると、"Install Ubuntu"を選択します。
+1. "GNU GRUB"のメニューの表示時、"Install Ubuntu"を選択します。
 
 1. 以下の画面では言語を選択し、"続ける"を押します。その後、キーボードやネットワークに関しても環境に合わせて設定ください。
 
@@ -131,13 +129,13 @@ date: 2021-01-12
 
    ![Ubuntu install 3](images/seminar_no139/ubuntuinst_4_filesystem.png)
 
-1. インストール完了後、**LiveUSBを未接続の状態で**パソコンを再起動すると以下の画面が現れます。<br>
+1. インストール完了後、<span style="color: red">*LiveUSBを未接続の状態で*</span>パソコンを再起動すると以下の画面が現れます。<br>
 これで Ubuntu Linux のインストールが完了です。
 
    ![Ubuntu install 4](images/seminar_no139/ubuntuinst_7_desktop.png)
 
 
-### ROS ベースパッケージのインストール
+### ROS Melodic ベースパッケージのインストール
 
 ![](images/turtlebot3/remote_pc_and_turtlebot.png)
 
@@ -146,13 +144,12 @@ date: 2021-01-12
 >本章の内容は、TurtleBot3を制御する`リモートPC`(Ubuntu18.04がインストールされたデスクトップまたは、ノートパソコン)に対応しています。 **この手順は、TurtleBot3で実施しないでください。**
 
 
-下記のスクリプトを使用すると、ROS1のインストール手順を簡略化できます。
-ターミナルウィンドウでこのスクリプトを実行します。ターミナルアプリケーションは、画面の左上隅にあるUbuntu検索アイコンから起動できます。もしくは、ターミナルのショートカットキー`Ctrl+Alt+t`を使用して起動できます。 ROS1をインストールした後、リモートPCを再起動してください。
+下記のスクリプトを使用すると、ROS Melodic(ROS)のインストール手順を簡略化できます。
+ターミナルウィンドウでこのスクリプトを実行します。ターミナルアプリケーションは、画面の左上隅にあるUbuntu検索アイコンから起動できます。もしくは、ターミナルのショートカットキー`Ctrl+Alt+t`を使用して起動できます。 ROSをインストールした後、リモートPCを再起動してください。
+<br><br>
 
-
-```shell
 【リモートPCで実施】
-
+```shell
 $ sudo apt-get update
 $ sudo apt-get upgrade
 $ wget https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_tools/master/install_ros_melodic.sh
@@ -176,10 +173,11 @@ $ bash ./install_ros_melodic.sh
 <div class ="notice--info">{{info_01 | markdownify}}</div>
 -->
 
-### ROS1 依存パッケージのインストール
+### ROS 依存パッケージのインストール
 
-リモートPCにROS1依存パッケージをインストールする手順です。
+リモートPCにROS依存パッケージをインストールする手順です。<br><br>
 
+【リモートPCで実施】
 ```shell
 $ sudo apt-get install ros-melodic-joy ros-melodic-teleop-twist-joy \
   ros-melodic-teleop-twist-keyboard ros-melodic-laser-proc \
@@ -193,7 +191,9 @@ $ sudo apt-get install ros-melodic-joy ros-melodic-teleop-twist-joy \
 ```
 
 リモートPCにTurtleBot3を制御するための依存パッケージをインストールする手順です。
+<br><br>
 
+【リモートPCで実施】
 ```shell
 $ sudo apt-get install ros-melodic-dynamixel-sdk
 $ sudo apt-get install ros-melodic-turtlebot3-msgs
@@ -204,6 +204,9 @@ $ sudo apt-get install ros-melodic-turtlebot3
 
 環境変数`TURTLEBOT3_MODEL`モデルにデフォルト名を設定します。以下のコマンドを端末に入力し、環境変数の設定と反映を行います。
 
+<br>
+
+【リモートPCで実施】
 ```shell
 $ echo "export TURTLEBOT3_MODEL=burger" >> ~/.bashrc
 $ source ~/.bashrc
@@ -212,17 +215,22 @@ $ source ~/.bashrc
 `catkin_make`コマンドへのパスが通っていることを確認します。<br>
 以下のコマンドを実行後、"/opt/ros/melodic/bin/catkin_make"といったパスが表示されれば、正しく設定できています。
 
+<br>
+
+【リモートPCで実施】
 ```shell
 $ which catkin_make
 ```
 
 何も表示されない場合、環境変数設定に不備が考えられるため、以下のコマンドを再実行してください。
+<br>
 
+【リモートPCで実施】
 ```shell
 $ source ~/.bashrc
 ```
 
-<a id="remotepc_wifi_settings"></a> 
+<a id="remotepc_wifi_settings"></a>
 ### ネットワーク構成
 
 ![](images/turtlebot3/network_configuration.png)
@@ -230,18 +238,21 @@ $ source ~/.bashrc
 TurtleBot PCとリモートPCの間で通信をするためにIPアドレスが必要です。 **リモートPCとTurtleBot PCは、同じwifiルーターに接続する必要があります。**
 
 `リモートPC`のターミナルウィンドウで次のコマンドを入力し、リモートPCのIPアドレスを確認します。
+<br>
 
+【リモートPCで実施】
 ```shell
 $ ip address show
 ```
 
 赤枠部分が、`リモートPC`のIPアドレスです。
-(例ですので、環境によってIPアドレスが異なります。また、"/24"の部分は含みません。)
+(環境によってIPアドレスが異なる場合があります。また、"/24"の部分は含みません。)
 
 ![](images/seminar_no139/rosset_0_ip.png)
 
 以下のコマンドを入力し、~/.bashrcを開きます。
 
+【リモートPCで実施】
 ```shell
 $ nano ~/.bashrc
 ```
@@ -257,29 +268,25 @@ $ nano ~/.bashrc
 
 次に、以下のコマンドでbashrcを実行します。
 
+【リモートPCで実施】
 ```shell
 $ source ~/.bashrc
 ```
 
-以上で、リモートPCの開発環境構築は完了です。
+以上でリモートPCの開発環境構築は完了です。
 
-<!-- 2021/12/2 ここまで -->
 
 ## 手順（TurtleBotメインコンピューター：Raspberry Pi 3+ セットアップ）
-<!-- https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup を参考して記述する 
-
-"WiFiネットワーク設定を構成する"を、Linux PCで実施する。
-
--->
-
-**警告**:
-- この章の内容は、**TurtleBot3 Burger**のメインコンピューターとなる `Raspberry Pi 3+`に対応しています。 **本項の設定内容をリモートPC（デスクトップPCまたは、ノートパソコン）で実施しないでください。**
-- セットアップ作業には、電源と時間が必要なためバッテリーは適していません。この作業では、SMPS(ACアダプタ)の使用を推奨します。
 
 
-139回ロボット工学セミナーにて実習キットを購入された方は、付属のSDカードに適切なイメージが記録されているので、下の[WiFiネットワーク設定を構成する](#tb3_wifi_settings)を実施ください。
+>**警告**
+>- この章の内容は、**TurtleBot3 Burger**のメインコンピューターとなる `Raspberry Pi 3+(Raspberry Pi)`に対応しています。 **本項の設定内容をリモートPC（デスクトップPCまたは、ノートパソコン）で実施しないでください。**
+>- セットアップ作業には、電源と時間が必要なためバッテリーは適していません。この作業では、SMPS(ACアダプタ)の使用を推奨します。
 
-もし、お持ちのTurtleBot3 BurgerにROS Melodicがインストールされていない場合、以下のHPより、Rasberry PiにROS Melodicのインストールを実施する必要があります。(画面上部のROSバージョン選択箇所において、'Melodic'を選択ください)
+
+139回ロボット工学セミナー経由で実習キットを購入された方は、付属のSDカードに適切なイメージが記録されているので、下の[WiFiネットワーク設定を構成する](#tb3_wifi_settings)から実施ください。
+
+もし、お持ちのTurtleBot3 BurgerにROS Melodicがインストールされていない場合、以下のHPより、Raspberry PiにROS Melodicのインストールを実施する必要があります。(画面上部のROSバージョン選択箇所において、'Melodic'を選択ください)
 
  3.2.1 "microSDカードとリーダーを準備する" ～ 3.2.4.2 "ディスクユーティリティ" まで実施ください。
 
@@ -290,21 +297,22 @@ https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup
 <a id="tb3_wifi_settings"></a> 
 ### WiFiネットワーク設定を構成する
 
-1. RaspberryPiを起動
+1. TurtleBotの制御コンピュータであるRaspberry Piを起動
 
-   以下の手順でRasberryPiを起動し、ログインします。
+   以下の手順で、TurtleBotの制御コンピュータであるRaspberry Pi(以下、SBC)を起動し、ログインします。
 
-   - 入力デバイスをRaspberryPiのUSBポートに接続します。
-   - RasberryPi用起動イメージが格納されたmicroSDカードを挿入します。
-   - 電源を（USBまたはOpenCRのいずれかで）接続して、RaspberryPiをオンにします。
+   - 入力デバイスをSBCのUSBポートに接続します。
+   - SBC用起動イメージが格納されたmicroSDカードを挿入します。
+   - 電源を（USBまたはOpenCRのいずれかで）接続して、SBCをオンにします。
    - アカウント "ubuntu"、パスワード "turtlebot"でログインします。
 
-     `Raspberry Piに電力を供給する前に、HDMIケーブルを接続する必要があります。接続しないと、RaspberryPiのHDMIポートが無効になります。`
+     `SBCに電力を供給する前に、HDMIケーブルを接続する必要があります。接続しないと、SBCのHDMIポートが無効になります。`
 
 1. 設定ファイルの修正
   
    修正対象ファイルを開く。
 
+  【SBC側で実施】
    ```shell
    $ cd /etc/netplan
    $ sudo nano 50-cloud-init.yaml
@@ -314,79 +322,88 @@ https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup
 
   ![](images/seminar_no139/wifi_settings.png)
 
- 修正後、ファイルを保存(`Ctrl + o` → `enter`)し、編集を終了（`Ctrl + x`）します。
+  修正後、ファイルを保存(`Ctrl + o` → `enter`)し、編集を終了（`Ctrl + x`）します。
 
-Rasberry Piを再起動します。
+  SBCを再起動します。
 
-   ```shell
-   $ sudo reboot
-   ```
+  【SBCで実施】
 
+  ```shell
+  $ sudo reboot
+  ```
 
 ### ROSのネットワーク設定
-Rasberry Piの再起動後、リモートPCのセットアップと同様([参照](#remotepc_wifi_settings))にRasberry PiのIPアドレスを調べる（`wlan0`の箇所）。
+SBCの再起動後、リモートPCのセットアップと同様([参照](#remotepc_wifi_settings))にSBCのIPアドレスを調べる（`wlan0`の箇所）。
    
-   ```shell
-  $ ip address show
-   ```
+【SBCで実施】
+```shell
+$ ip address show
+```
 
-  エディタにて~/.bashrcを開きます。
+エディタにて~/.bashrcを開きます。
 
-  ```shell
-  $ nano ~/.bashrc
-  ```
+【SBCで実施】
+```shell
+$ nano ~/.bashrc
+```
 
-下図のように、環境変数`ROS_MASTER_URI`と`ROS_HOSTNAME`のIPアドレスを、それぞれリモートPCのIPアドレスとRasberry Piから取得したIPアドレスに変更します。
+下図のように、環境変数`ROS_MASTER_URI`と`ROS_HOSTNAME`のIPアドレスを、それぞれリモートPCのIPアドレスとSBCから取得したIPアドレスに変更します。
 
-  ![](images/seminar_no139/wifi_ros_env.png)
+![](images/seminar_no139/wifi_ros_env.png)
 
 
 
-   ファイルを保存し（`Ctrl + o` → `enter`)、閉じる（`Ctrl+x`）。
+ファイルを保存し（`Ctrl + o` → `enter`)、閉じる（`Ctrl+x`）。
 
-   さきほど修正した設定を反映するため、**~/.bashrcを編集したターミナルと同じターミナルにて、** 以下を実行します。
-   (~/.bashrcの修正により、今後、新規にターミナルを開いた時は自動で設定が反映されます)
+さきほど修正した設定を反映するため、**~/.bashrcを編集したターミナルと同じターミナルにて、** 以下を実行します。
+(~/.bashrcの修正により、今後、新規にターミナルを開いた時は自動で設定が反映されます)
 
-  ```shell
-	$ source ~/.bashrc
-  ```
+【SBCで実施】
+```shell
+$ source ~/.bashrc
+```
 
-## リモートPCからTurtleBot PCへの接続方法
+## リモートPCからSBCへの接続方法
 
-ワイヤレス構成が完了したら、デスクトップまたはノートパソコンからSSH経由でRaspberry Piに接続できます。
+ワイヤレス構成が完了したら、デスクトップまたはノートパソコンからSSH経由でSBCに接続できます。
 
-  まずは、リモートPCとTurtleBotでSSHをインストールする。
+まずは、リモートPCとSBCでSSHをインストールする。
 
-  TurtleBotにログイン後、以下を実行する。
+SBCにログイン後、以下を実行する。
 
-   ```shell
-   $ sudo apt-get install ssh
-   ```
+【SBCで実施】
+```shell
+$ sudo apt-get install ssh
+```
 
-   TurtleBotでSSHを有効にする。
-   ```shell
-   $ sudo service ssh start
-   $ sudo ufw allow ssh
-   ```
+SBCでSSHを有効にする。
+
+【SBCで実施】
+```shell
+$ sudo service ssh start
+$ sudo ufw allow ssh
+```
  
-  リモートPCから、Rasberry Piに接続する。
-  リモートPCにログインし、以下を入力する。
+リモートPCから、SBCに接続する。
+リモートPCにログインし、以下を入力する。
 
-  ```shell
-  $ ssh ubuntu@192.168.YY.YY   (@の後はturtlebotのIPアドレス)
-   ubuntu@192.168.YY.YY's password: (パスワード "turtlebot" を入力)
-   (初めて接続する場合、接続を継続するかを問われるので、yesを入力する)
-  ```
+【リモートPCで実施】
+```shell
+$ ssh ubuntu@192.168.YY.YY   (@の後はSBCのIPアドレス)
+ ubuntu@192.168.YY.YY's password: (パスワード "SBC" を入力)
+ (初めて接続する場合、接続を継続するかを問われるので、yesを入力する)
+```
 
- turtlebotに接続できればOK。
 
- 接続できない場合、
- - sshで指定しているIPアドレス、アカウント、パスワードに誤りがないか
- - リモートPCとTurtleBotを同じwifiルーターに接続しているか
+SBCに接続できれば、設定は問題なくできています。
+
+接続できない場合、
+- sshで指定しているIPアドレス、アカウント、パスワードに誤りがないか
+- リモートPCとSBCを同じwifiルーターに接続しているか
  
- を確認してください。
+を確認してください。
 
- 以上で、事前準備は終了です。
+以上で、事前準備は終了です。
 
 
  <!-- 
