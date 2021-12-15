@@ -11,16 +11,16 @@ date: 2021-01-12
 
 ## 用意するもの
 
-- ノート型パソコンあるいはデスクトップPC
+- WiFiへの接続が可能なノート型パソコンあるいはデスクトップPC
 
   *<span style="color: red">本手順によりパソコンの既存のOS（Windows等）及び保存されているデータやソフトウェアは完全に削除されます。予めバックアップを行ってください。</span>*
-- 容量 4GB 以上の空 USB メモリ
 - インターネット接続
+- 容量 4GB 以上の空 USB メモリ
 - モニター１台
 - キーボード
 - HDMIケーブル
 - マウス
-- 容量 4GB 以上の空 SDカード
+- 容量 4GB 以上の空 SDカード(139回ロボット工学セミナー経由で実習キットを**購入されていない方のみ**)
 
 ## リモートPCセットアップ
 
@@ -293,16 +293,17 @@ https://emanual.robotis.com/docs/en/platform/turtlebot3/sbc_setup/#sbc-setup
 <a id="tb3_wifi_settings"></a> 
 ### WiFiネットワーク設定を構成する
 
-1. TurtleBotの制御コンピュータであるRaspberry Piを起動
+1. TurtleBotの制御コンピュータであるRaspberry Pi(以下、SBC)を起動
 
-   以下の手順で、TurtleBotの制御コンピュータであるRaspberry Pi(以下、SBC)を起動し、ログインします。
+   以下の手順で、SBCを起動し、ログインします。
 
-   - 入力デバイスをSBCのUSBポートに接続します。
-   - SBC用起動イメージが格納されたmicroSDカードを挿入します。
-   - 電源を（USBまたはOpenCRのいずれかで）接続して、SBCをオンにします。
-   - アカウント "ubuntu"、パスワード "turtlebot"でログインします。
+   - キーボードをSBCのUSBポートに接続します。
+   - SBC用起動イメージが格納されたmicroSDカードを、SBCに挿入します。
 
      `SBCに電力を供給する前に、HDMIケーブルを接続する必要があります。接続しないと、SBCのHDMIポートが無効になります。`
+
+   - 電源を接続して、SBCをパワーオンします。
+   - アカウント "ubuntu"、パスワード "turtlebot"でログインします。
 
 1. 設定ファイルの修正
   
