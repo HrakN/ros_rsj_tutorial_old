@@ -171,6 +171,6 @@ $ [上下キー]
 ```
 
 <button type="button" class="bth btn-primary btn-lg">[
-    <span style="color:black">**メインページへ**</span>](index.md)</button>
+    <span style="color:black">**メインページへ**</span>](index.html)</button>
 <button type="button"  class="bth btn-success btn-lg">
     [<span style="color:black">**次の実習へ**</span>](ros_basics.md)</button>

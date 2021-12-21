@@ -10,8 +10,26 @@ date: 2020-01-23
 
 基本的なROS上で動くプログラムの書き方とコンパイル方法を学習します。
 
-<span style="color:red">**下記の実習を行うために、まず`ROS_MASTER_URI`と`ROS_HOSTNAME`を`localhost`に戻します（[参照](./linux_and_ros_install.md#ネットワーク構成)）。**</span>
+<span style="color:red">**下記の実習を行うために、まず、`リモートPC`の`ROS_MASTER_URI`と`ROS_HOSTNAME`を`localhost`に戻します。**</span>
 
+エディタで~/.bashrcを開きます。以下ではエディタとしてgeditを使用しています。
+
+**`【リモートPCで実施】`**
+```shell
+$ cd
+$ gedit ~/.bashrc
+```
+
+下図の赤枠で囲まれた部分が変更箇所となります。
+![ROS_MASTER_URIとROS_HOSTNAMEの変更](images/seminar_no139/rosbasics_change_to_localhost.png)
+
+修正後、画面右上Saveにて保存してgeditを閉じます。
+次に環境変数を反映させます。
+
+**`【リモートPCで実施】`**
+```shell
+$ source ~/.bashrc
+```
 
 ## 基本的な用語
 
@@ -37,10 +55,11 @@ date: 2020-01-23
 ## ソースコードを格納するワークスペース
 
 ROSでは、プログラムをビルドする際にcatkinというソフトウェアパッケージを使用しています。<br>
-また、catkin は、 cmake というソフトウェアを使っており、ROS用のプログラムのパッケージ毎にcmakeの設定ファイルを作成することで、
-ビルドに必要な設定を行います。
+また、catkin は、 cmake というソフトウェアを使っており、ROS用のプログラムのパッケージ毎にcmakeの設定ファイルを作成することで、ビルドに必要な設定を行います。
 
-以下の手順で本作業用の新しいワークスペースを作ります。
+*今回はROSをインストールするために`install_ros_melodic.sh`を利用したのでワークスペースが自動的に作成されています。*{: style="color: red"}
+
+`install_ros_melodic.sh`を利用せず新しいワークスペースを作る場合、以下の手順となります。(今回は以下のコマンド入力は不要です)
 ```shell
 $ mkdir -p ~/catkin_ws/src
 $ cd ~/catkin_ws/src
@@ -52,13 +71,8 @@ CMakeLists.txt
 $ cd ..
 $ ls
 src
-$
 ```
 
-*今回はROSをインストールするために`install_ros_kinetic.sh`を利用しましたのでワークスペースが自動的に作成されました。*{: style="color: red"}
-```shell
-cd ~/catkin_ws/src
-```
 
 `catkin_ws`ディレクトリ内にある、`build`、`devel`は、catkinシステムがプログラムをビルドする際に使用するものなので、
 ユーザが触る必要はありません。<br>
@@ -69,9 +83,9 @@ cd ~/catkin_ws/src
 
 ```shell
 $ cd ~/catkin_ws/src
-$ git clone https://github.com/igra9/rsj_seminar_2021_ros_basics.git
+$ git clone https://github.com/garcia-g/rsj_seminar_no139_ros_basics.git
 $ ls
-CMakeLists.txt  rsj_seminar_2021_ros_basics
+CMakeLists.txt  rsj_seminar_no139_ros_basics
 $
 ```
 
@@ -87,7 +101,7 @@ URLが分かれば上の手順だけで簡単にROSのパッケージが自分�
 ダウンロードしているパッケージがバージョンアップされている場合などには、下記の実行例とファイル名が異なったり、ファイルが追加・削除されている場合があります。
 
 ```shell
-$ cd ~/catkin_ws/src/rsj_seminar_2021_ros_basics/
+$ cd ~/catkin_ws/src/rsj_seminar_no139_ros_basics/
 $ ls
 CMakeLists.txt  launch  msg  package.xml  src
 $ ls launch/
@@ -103,7 +117,7 @@ $
 このパッケージをビルドするために必要な情報が書かれています。<br>
 `launch`ディレクトリには、複数のノードでできたシステムの定義が、`msg`ディレクトリには、このパッケージ独自のデータ形式の定義が、`src`ディレクトリには、このパッケージに含まれるプログラム(ノード)のソースコードが含まれています。
 
-`catkin_make`コマンドで、ダウンとロードした`rsj_seminar_2021_ros_basics`パッケージを含む、ワークスペース全体をビルドします。`catkin_make`は、ワークスペースの最上位ディレクトリ(`~/catkin_ws/`)で行います。
+`catkin_make`コマンドで、ダウンとロードした`rsj_seminar_no139_ros_basics`パッケージを含む、ワークスペース全体をビルドします。`catkin_make`は、ワークスペースの最上位ディレクトリ(`~/catkin_ws/`)で行います。
 
 ## ROSノードの理解とビルド・実行
 
@@ -113,7 +127,7 @@ $
 ```shell
 $ cd ~/catkin_ws/src/
 $ ls
-CMakeLists.txt  rsj_seminar_2021_ros_basics
+CMakeLists.txt  rsj_seminar_no139_ros_basics
 $ cd ..
 $
 ```
@@ -123,6 +137,8 @@ Linuxでのプログラム開発がはじめての方には、Ubuntuにデフォ
 プログラミング作業が多い方には`Visual Code`がおすすめです。
 
 お好みのテキストエディタで`~/catkin_ws/src/rsj_seminar_2021_ros_basics/src/Publish.cpp`を開きます。
+
+<!-- !!!!!!!!  2021/12/21 ここまで  以下の.pngをコードブロックに変更する-->
 
 ![Publish.cpp](images/seminar2021/publish_cpp_in_editor.png)
 
