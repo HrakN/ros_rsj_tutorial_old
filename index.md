@@ -16,7 +16,7 @@ title: 日本ロボット学会　ロボットの作り方 ～移動ロボット
 - 実習に利用するノート PC
   - Ubuntu Linux と ROS を事前にインストールしてください
   - インストール方法は以下を参考にしてください
-    - [Ubuntu LinuxとROSのインストール](linux_and_ros_install.md)
+    - [Ubuntu LinuxとROSのインストール](linux_and_ros_install.html)
 
 - 組み立て済み移動ロボット（各グループで1台以上）
   - Robotis社が提供している[TurtleBot3 burger](https://emanual.robotis.com/docs/en/platform/turtlebot3/overview/)を利用します
@@ -30,7 +30,7 @@ title: 日本ロボット学会　ロボットの作り方 ～移動ロボット
 ### １日目（1/29(土) 10:00-17:00）
 
 |10:00-10:30|セミナーの進行につきまして|
-|10:30-12:00|講習環境の確認とROSの基本操作 |
+|10:30-12:00|[セミナー環境の確認](linux_basics.md)とROSの基本操作 |
 |12:00-13:00|昼休み |
 |13:00-14:00|講義1 「自己位置推定ROSパッケージの作り方」<br>講師：上田　隆一 (千葉工業大学)|
 |14:00-17:00|移動ロボットの動作確認 |
@@ -61,7 +61,10 @@ title: 日本ロボット学会　ロボットの作り方 ～移動ロボット
 
 1. [Ubuntu LinuxとROSのインストール](linux_and_ros_install.html)
 
-<!-- 
+1. [セミナー環境の確認](linux_basics.html)
+
+
+<!--
 1. [Linux の基本操作](linux_basics.html)
 
 1. [ROSの基本操作](ros_basics.html)
