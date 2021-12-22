@@ -138,7 +138,7 @@ Linuxでのプログラム開発がはじめての方には、Ubuntuにデフォ
 
 お好みのテキストエディタで `~/catkin_ws/src/rsj_seminar_no139_ros_basics/src/Publish.cpp` を開きます。
 
-```C++
+```cpp
 #include <ros/ros.h>
 #include <rsj_seminar_no139_ros_basics/Text.h>
 
@@ -179,19 +179,19 @@ int main(int argc, char **argv) {
 
 まず、先頭部分では、必要なヘッダファイルをインクルードしています。
 
-```c++
+```cpp
 #include <ros/ros.h>
 ```
 
 続いて、本ノードが利用するメッセージのヘッダファイルをインクルードしています。
 
-```c++
+```cpp
 #include <rsj_seminar_no139_ros_basics/Text.h>
 ```
 
 `std::string`が利用されるので、ヘッダファイルをインクルードします。
 
-```c++
+```cpp
 #include <string>
 ```
 
@@ -199,7 +199,7 @@ int main(int argc, char **argv) {
 本ノードは非常に簡単な構成としているため、すべての機能をmain関数に入れています。<br>
 複雑な機能や色々なデータを持つノードには、クラスとしての実装することをおすすめします。
 
-```c++
+```cpp
 int main(int argc, char **argv) {
   ros::init(argc, argv, "Publish");
   ros::NodeHandle node;
@@ -336,7 +336,7 @@ $ rosrun rsj_seminar_no139_ros_basics publish \
 
 以下のソースは`rsj_seminar_no139_ros_basics/src/Show.cpp`ファイルにあります。
 
-```c++
+```cpp
 #include <ros/ros.h>
 #include <rsj_seminar_no139_ros_basics/Text.h>
 
