@@ -65,7 +65,7 @@ $ mkdir -p ~/catkin_ws/src
 $ cd ~/catkin_ws/src
 $ catkin_init_workspace
 Creating symlink "/home/[ユーザ名]/catkin/src/CMakeLists.txt"
-    pointing to "/opt/ros/kinetic/share/catkin/cmake/toplevel.cmake"
+    pointing to "/opt/ros/melodic/share/catkin/cmake/toplevel.cmake"
 $ ls
 CMakeLists.txt
 $ cd ..
@@ -134,13 +134,44 @@ $
 
 ソースファイルの編集にはお好みのテキストエディタが利用可能です。<br>
 Linuxでのプログラム開発がはじめての方には、Ubuntuにデフォルトでインストールされている`gedit`がおすすめです。
-プログラミング作業が多い方には`Visual Code`がおすすめです。
+プログラミング作業が多い方には[`Visual Studio Code`](https://azure.microsoft.com/ja-jp/products/visual-studio-code/)がおすすめです。
 
-お好みのテキストエディタで`~/catkin_ws/src/rsj_seminar_2021_ros_basics/src/Publish.cpp`を開きます。
+お好みのテキストエディタで `~/catkin_ws/src/rsj_seminar_no139_ros_basics/src/Publish.cpp` を開きます。
 
-<!-- !!!!!!!!  2021/12/21 ここまで  以下の.pngをコードブロックに変更する-->
+```C++
+#include <ros/ros.h>
+#include <rsj_seminar_no139_ros_basics/Text.h>
 
-![Publish.cpp](images/seminar2021/publish_cpp_in_editor.png)
+#include <string>
+
+int main(int argc, char **argv) {
+  ros::init(argc, argv, "Publish");
+  ros::NodeHandle node;
+
+  std::string message;
+  std::string date;
+  ros::param::param<std::string>("~message", message, "test seminar 2022");
+  ros::param::param<std::string>("~date", date, "January 29");
+
+  ros::Publisher pub = node.advertise<rsj_seminar_no139_ros_basics::Text>("Publish", 1);
+
+  ros::Rate rate(1);
+
+  while (ros::ok()) {
+    ros::spinOnce();
+
+    ROS_INFO("Publishing message '%s %s'", message.c_str(), date.c_str());
+    rsj_seminar_no139_ros_basics::Text sample;
+    sample.message = message;
+    sample.date = date;
+    pub.publish(sample);
+
+    rate.sleep();
+  }
+
+  return 0;
+}
+```
 
 ### 送信ノードの作成 （基本的なコードを読み解く）
 
@@ -155,7 +186,7 @@ Linuxでのプログラム開発がはじめての方には、Ubuntuにデフォ
 続いて、本ノードが利用するメッセージのヘッダファイルをインクルードしています。
 
 ```c++
-#include <rsj_seminar_2021_ros_basics/Text.h>
+#include <rsj_seminar_no139_ros_basics/Text.h>
 ```
 
 `std::string`が利用されるので、ヘッダファイルをインクルードします。
@@ -175,10 +206,10 @@ int main(int argc, char **argv) {
 
   std::string message;
   std::string date;
-  ros::param::param<std::string>("~message", message, "test seminar 2021");
-  ros::param::param<std::string>("~date", date, "January 22");
+  ros::param::param<std::string>("~message", message, "test seminar 2022");
+  ros::param::param<std::string>("~date", date, "January 29");
 
-  ros::Publisher pub = node.advertise<rsj_seminar_2021_ros_basics::Text>("Publish", 1);
+  ros::Publisher pub = node.advertise<rsj_seminar_no139_ros_basics::Text>("Publish", 1);
 
   ros::Rate rate(1);
 
@@ -186,7 +217,7 @@ int main(int argc, char **argv) {
     ros::spinOnce();
 
     ROS_INFO("Publishing message '%s %s'", message.c_str(), date.c_str());
-    rsj_seminar_2021_ros_basics::Text sample;
+    rsj_seminar_no139_ros_basics::Text sample;
     sample.message = message;
     sample.date = date;
     pub.publish(sample);
@@ -205,8 +236,8 @@ int main(int argc, char **argv) {
 
 その次にある`ros::NodeHandle node`は、ノードを操るための変数を初期化します。
 
-次の４行はパラメータの初期化です。ROSでは、純粋コマンドラインを利用するよりROSのパラメータ機能を利用することが標準的です。<br>
-こうすることで、コマンドラインだけではなくて、roslaunch（複数のノードを起動するためのツール）やGUIツールからもパラメータの設定が簡単にできます。
+次の４行はパラメータの初期化です。ROSではコマンドライン引数によるパラメータ指定より、ROSのパラメータ設定機能の利用が一般的です。<br>
+ROSのパラメータ設定機能の利用により、roslaunch（複数のノードを起動するためのツール）やGUIツールからもパラメータ設定を容易に行えます。
 
 パラメータの初期化が終わったら、データ送信のためのパブリッシャーを初期化します。<br>
 この変数の作成によりトピックが作成され、__このノードからデータの送信が可能になります。__{: style="color: red" } <br>
@@ -218,7 +249,7 @@ int main(int argc, char **argv) {
 `1`
 : メッセージのバッファリング量を指定 (大きくすると、処理が一時的に重くなったときなどに受け取り側の読み飛ばしを減らせる)
 
-advertise関数についている`<rsj_seminar_2021_ros_basics::Text>`の部分はメッセージの型を指定しています。<br>
+advertise関数についている`<rsj_seminar_no139_ros_basics::Text>`の部分はメッセージの型を指定しています。<br>
 (この指定方法は、C++のテンプレートという機能を利用していますが、ここでは「`advertise`のときはメッセージの型指定を`<>`の中に書く」とだけ覚えておけば問題ありません)
 
 セットアップの最後として、`ros::Rate rate(1)`で周期実行のためのクラスを初期化しています。<br>
@@ -228,21 +259,22 @@ advertise関数についている`<rsj_seminar_2021_ros_basics::Text>`の部分�
 `ros::ok()`を`while`の条件にすることで、ノードの終了指示が与えられたとき(`Ctrl+c`{: style="border: 1px solid black" } が押された場合も含む)には、ループを抜けて終了処理などが行えるようになっています。
 
 ループ中では、まず、_`ros::spinOnce()`を呼び出して、ROSのメッセージを受け取る_{: style="color: red" } といった処理を行います。<br>
-`spinOnce`は、その時点で届いているメッセージの受け取り処理を済ませた後、すぐに処理を返します。<br>
+`spinOnce()`は、その時点で届いているメッセージの受け取り処理を済ませた後、すぐに処理を返します。
+`spinOnece()`はこのシンプルなプログラムでは意味をなしません。というのは、トピック受信時に処理を行うコールバックを、ここでは定義していないためです。仮にこのアプリケーションにトピック受信処理機能を加えた場合、`spinOnce()`を行わなければコールバックが呼ばれないため、ここで加えておいた方がよいでしょう。<br>
 `rate.sleep()`は、先ほど初期化した実行周波数を維持するように`sleep`します。
 
-`ros::spinOnce()`と`rate.sleep()`の間に本ノードの処理を入れました。
+`ros::spinOnce()`と`rate.sleep()`の間に本ノードの処理を入れています。
 
-最初は、ROSでログ情報を画面などに出力する際に用いるROS_INFO()関数を呼び出してメッセージを表示しています。<br>
+`spinOnce()`後は、ROSでログ情報を画面などに出力する際に用いるROS_INFO()関数を呼び出してメッセージを表示しています。<br>
 他にも、ROS_DEBUG()、ROS_WARN()、ROS_ERROR()、ROS_FATAL()などのデバッグログ関数が用意されています。
 
 その後、データを送信します。<br>
-まずは送信するデータ型（`rsj_seminar_2021_ros_basics::Text`）を初期化し、値を設定します。<br>
+まずは送信するデータ型（`rsj_seminar_no139_ros_basics::Text`）を初期化し、値を設定します。<br>
 さきほどセットアップで作成したパラメータの値を利用します。<br>
-こうすることで、送信されるデータの内容は実行するときに自由に変更できます。
+こうすることで、送信データの内容を、実行するときに自由に変更できます。
 
 そして、`pub.publish(sample)`によってデータを送信します。<br>
-この行でデータはバッファーに入れられ、別のスレッドが自動的にサブスクライバに送信します(ROSのデフォルトでは非同期送信となります）。
+この行でデータはバッファに入れられ、別スレッドが自動的にサブスクライバに送信します(ROSのデフォルトでは非同期送信となります）。
 
 main ループが終了すると作成した変数は自動的にクリーンアップを実行し、ノードのシャットダウンを行います。
 
@@ -271,15 +303,14 @@ ROSでワークスペースを利用するとき、ターミナルでそのワ�
 このコマンドはワークスペースの環境編情報などを利用中のターミナルに読み込みます。<br>
 しかし、 ターミナルごとに環境変数はリセットされますので、新しいターミナルでワークスペースを利用しはじめるときには、まず`source devel/setup.bash`を実行しなければなりません。<br>
 一つのターミナルで一回だけ実行すれば十分です。そのターミナルを閉じるまで有効となります。<br>
-この作業を省略するため、`.bashrc`に`source devel/setup.bash`を追加することをおすすめします。
-*`install_ros_kinetic.sh`を利用した場合は`.bashrc`に`source devel/setup.bash`が既に追加されました。*{: style="color: red"}
+この作業を省略するため、`~/.bashrc`に`source devel/setup.bash`を追加することをおすすめします。(*`install_ros_melodic.sh`を利用した場合は`.bashrc`に`source devel/setup.bash`が既に追加されています。*{: style="color: red"})
 
 2つ目のターミナルで下記を実行します。
 
 ```shell
 $ cd ~/catkin_ws/
-$ rosrun rsj_seminar_2021_ros_basics publish
-[ INFO] [1494840089.900580884]: Publishing message 'test seminar 2021 January 22'
+$ rosrun rsj_seminar_no139_ros_basics publish
+[ INFO] [1640146129.900580884]: Publishing message 'test seminar 2022 January 29'
 ```
 
 上記のようなログが表示されれば成功です。
@@ -289,9 +320,9 @@ $ rosrun rsj_seminar_2021_ros_basics publish
 そして以下を実行してください。
 
 ```shell
-$ rosrun rsj_seminar_2021_ros_basics publish \
+$ rosrun rsj_seminar_no139_ros_basics publish \
   _message:=test-2 _date:=today
-[ INFO] [1494840247.644756809]: Publishing message 'test-2 today'
+[ INFO] [1640146529.644756809]: Publishing message 'test-2 today'
 ```
 
 上記のようなログが表示されれば成功です。
@@ -303,15 +334,15 @@ $ rosrun rsj_seminar_2021_ros_basics publish \
 前節で作成したノードはメッセージを送信するノードでした。<br>
 次にメッセージを受信するノードを作成してみましょう。
 
-以下のソースは`rsj_seminar_2021_ros_basics/src/Show.cpp`ファイルにあります。
+以下のソースは`rsj_seminar_no139_ros_basics/src/Show.cpp`ファイルにあります。
 
 ```c++
 #include <ros/ros.h>
-#include <rsj_seminar_2021_ros_basics/Text.h>
+#include <rsj_seminar_no139_ros_basics/Text.h>
 
 #include <iostream>
 
-void callback(const rsj_seminar_2021_ros_basics::Text::ConstPtr &msg) {
+void callback(const rsj_seminar_no139_ros_basics::Text::ConstPtr &msg) {
   std::cout << msg->message << " " << msg->date << '\n';
 }
 
@@ -328,21 +359,21 @@ int main(int argc, char **argv) {
 ```
 
 本ノードは`Publish`というトピックから取得したデータをターミナルに表示します。<br>
-`Publish`からの差は以下のようです。
+`Publish.cpp`からの差は以下のようです。
 
 まずは`callback`関数です。<br>
-この関数はトピックのデータ型に合っているポインタを引数としてもらいます。<br>
+この関数はトピックのデータ型に合っているポインタを引数として受け取ります。<br>
 トピックからデータを受け取ったら、`callback`関数は呼ばれます。<br>
 そのデータを`std::cout`に出力し終了します。
 
-`const rsj_seminar_2021_ros_basics::Text::ConstPtr` は、const型(内容を書き換えられない)、`rsj_seminar_2021_ros_basics`パッケージに含まれる、`Text`型のメッセージの、const型ポインタを表しています。<br>
+`const rsj_seminar_no139_ros_basics::Text::ConstPtr` は、const型(内容を書き換えられない)、`rsj_seminar_no139_ros_basics`パッケージに含まれる、`Text`型のメッセージの、const型ポインタを表しています。<br>
 `&msg`の`&`は、参照型(内容を書き換えられるように変数を渡すことができる)という意味ですが、(const型なので)ここでは特に気にする必要はありません。<br>
 msgはクラスへのポインタなので「-&gt;」を用い、以降はクラスのメンバ変数へのアクセスなので「.」を用いてアクセスしています。
 
 `main`関数内にパラメータの初期化はなくなりました。本ノードはパラメータを利用しません。
 
 `ros::Publisher`の初期化もなくなり、代わりに`ros::Subscriber`を初期化します。<br>
-この行はトピックへのアクセスを初期化し、データが取得したらの対応を示します。<br>
+この行はトピックへのアクセスを初期化し、データ取得時の対応を設定します。<br>
 引数は以下です。
 
 `"Publish"`
@@ -355,8 +386,8 @@ msgはクラスへのポインタなので「-&gt;」を用い、以降はクラ
 : メッセージを受け取ったときに呼び出す関数を指定 (`callback`関数)
 
 最後に、main ループでの処理は不要となります。<br>
-本ノードはデータが届くとき以外何もしないので、無限ループになる`ros::spin()`を呼びます。<br>
-`ros::spin()`は`Publish`の`while(...)`と`ros::spinOnce()`と類似の機能を中で持つので、ノードがシャットダウンされるまでに戻りません。
+本ノードはトピック受信時以外何もしないので、無限ループになる`ros::spin()`を呼びます。<br>
+`ros::spin()`は、`Publish.cpp`における`while(...)`および`ros::spinOnce()`と類似処理を実施し、ノードがシャットダウンされるまでに戻りません。
 
 ### 実行
 
@@ -371,26 +402,28 @@ $ roscore
 
 ```shell
 $ cd ~/catkin_ws/
-$ rosrun rsj_seminar_2021_ros_basics publish
-[ INFO] [1494840089.900580884]: Publishing message 'test seminar 2021 January 22'
+$ rosrun rsj_seminar_no139_ros_basics publish
+[ INFO] [1494840089.900580884]: Publishing message 'test seminar 2022 January 29'
 ```
 
 最後に、3番目のターミナルを開いて、下記を実行します。
 
 ```shell
 $ cd ~/catkin_ws/
-$ rosrun rsj_seminar_2021_ros_basics show
+$ rosrun rsj_seminar_no139_ros_basics show
 ```
 
-「test seminar 2021 January 22」と表示されれば成功です。
+「test seminar 2022 January 29」と表示されれば成功です。
 
 以上の手順で、ROSパッケージに含まれるノードのソースコードを編集し、ビルドして、実行できるようになりました。
+
+正常動作を確認後、各ターミナルにて`Ctrl+c`にて、roscoreおよび、`publish`ノード、`show`ノードを停止してください。
 
 ## システムとして実行する
 
 `roslaunch`を利用して、複数のノードでできたシステムを開始、終了することができます。
 
-手動でノードを１ノードずつ起動することは面倒ですし、ミスを誘発する可能性も高まります。<br>
+手動でノードを１ノードずつ起動することは手間がかかりますし、ミスを誘発する可能性も高まります。<br>
 そのためにROSに`roslaunch`というツールがあります。<br>
 `roslaunch`を利用すると、システム全体をまとめて起動し、状況をモニターし、そしてまとめて終了することが可能となります。
 
@@ -400,17 +433,17 @@ launchファイルは、ノードやパラメータの組み合わせを定義�
 フォーマットはXMLです。<br>
 システムに含まれるノードとそのノードの起動方法を一つずつ定義します。
 
-`rsj_seminar_2021_ros_basics`パッケージに以下のファイルが`launch/test.launch`として存在します。<br>
+`rsj_seminar_no139_ros_basics`パッケージに以下のファイルが`launch/test.launch`として存在します。<br>
 このファイルはさきほど手動で起動したシステムを定義します。
 
 ```xml
 <launch>
-  <node name="publisher" pkg="rsj_seminar_2021_ros_basics" type="publish">
+  <node name="publisher" pkg="rsj_seminar_no139_ros_basics" type="publish">
     <param name="message" value="Test seminar"/>
-    <param name="date" value="January 22"/>
+    <param name="date" value="January 29"/>
   </node>
 
-  <node name="show" pkg="rsj_seminar_2021_ros_basics" type="show" output="screen"/>
+  <node name="show" pkg="rsj_seminar_no139_ros_basics" type="show" output="screen"/>
 </launch>
 ```
 
@@ -427,11 +460,11 @@ launchファイルは、ノードやパラメータの組み合わせを定義�
 : ノードの実行ファイル名
 
 `output`
-: `stdout`の先：定義しないと`stdout`（`ROS_INFO`や`std::cout`への出力等）はターミナルで表示されず、`~/.ros/log/`に保存されるログファイルだけに出力される。
+: `stdout`に対する出力先：定義しない場合、`stdout`（`ROS_INFO`や`std::cout`への出力等）はターミナルで表示されず、`~/.ros/log/`に保存されるログファイルだけに出力される。
 
 １番目の`<node>`は`publish`ノードの定義です。<br>
 本要素の中でパラメータの設定も行っています。<br>
-なお、パラメータの設定を行わない場合はノードのソースに定義したディフォルト値が利用されるので、記述は必須ではありません。
+なお、パラメータの設定を行わない場合はノードのソースに定義したデフォルト値が利用されるので、記述は必須ではありません。
 
 ２番目の`<node>`は`show`ノードの定義です。<br>
 パラメータはありませんが、出力されることをターミナルで表示するようにします。
@@ -443,55 +476,48 @@ launchファイルは、ノードやパラメータの組み合わせを定義�
 
 ```shell
 $ cd ~/catkin_ws
-$ roslaunch rsj_seminar_2021_ros_basics test.launch
+$ roslaunch rsj_seminar_no139_ros_basics test.launch
 ... logging to /home/user_name/.ros/log/40887b56-395c-11e7-b8
 68-d8cb8ae35bff/roslaunch-user_name-11087.log
 Checking log directory for disk usage. This may take awhile.
 Press Ctrl-C to interrupt
 Done checking log file disk usage. Usage is <1GB.
 
-started roslaunch server http://localhost:43427/
+started roslaunch server http://localhost:11311/
 
 SUMMARY
 ========
 
 PARAMETERS
- * /publisher/date: January 22
+ * /publisher/date: January 29
  * /publisher/message: Test seminar
- * /rosdistro: kinetic
- * /rosversion: 1.12.7
+ * /rosdistro: melodic
+ * /rosversion: 1.14.12
 
 NODES
   /
-    publisher (rsj_seminar_2021_ros_basics/publish)
-    show (rsj_seminar_2021_ros_basics/show)
+    publisher (rsj_seminar_no139_ros_basics/publish)
+    show (rsj_seminar_no139_ros_basics/show)
 
-auto-starting new master
-process[master]: started with pid [13161]
 ROS_MASTER_URI=http://localhost:11311
 
-setting /run_id to 40887b56-395c-11e7-b868-d8cb8ae35bff
-process[rosout-1]: started with pid [13161]
-started core service [/rosout]
-process[publisher-2]: started with pid [13166]
-process[show-3]: started with pid [13179]
-Test seminar January 22
-Test seminar January 22
+process[publisher-1]: started with pid [13166]
+process[show-2]: started with pid [13179]
+Test seminar January 29
+Test seminar January 29
 ```
 
-「Test seminar January 22」が繰り返して表示されたら成功です。
+「Test seminar January 29」が繰り返して表示されたら成功です。
 
-`Ctrl+c`{: style="border: 1px solid black" } でシステムを停止します。
+`Ctrl+c`{: style="border: 1px solid black" } でノードを停止します。
 
 ```shell
-Test seminar January 22
-Test seminar January 22
-Test seminar January 22
-[Ctrl+c]
-^C[show-3] killing on exit
-[publisher-2] killing on exit
-[rosout-1] killing on exit
-[master] killing on exit
+Test seminar January 29
+Test seminar January 29
+Test seminar January 29
+  (Ctrl+c)
+^C[show-2] killing on exit
+[publisher-1] killing on exit
 shutting down processing monitor...
 ... shutting down processing monitor complete
 done
@@ -500,8 +526,9 @@ $
 
 これでシステムの起動、停止が簡単にできるようになりました。
 
-`roslaunch`を利用する場合は、別のターミナルでの`roscore`の実行は不要です。<br>
-`roslaunch`は中で`roscore`を起動したり停止したりします。
+`roslaunch`を利用する場合は、別のターミナルでの`roscore`の実行は不要です。
+`roslaunch`が自動的に`roscore`の起動や停止を行うためです。
+
 
 <button type="button" class="bth btn-primary btn-lg">[
     <span style="color:black">**メインページへ**</span>](index.html)</button>
