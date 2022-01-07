@@ -126,11 +126,11 @@ TurtleBot3のアプリケーションを起動するための基本的なパッ�
 **`【リモートPCで実施】`**
 ```shell
 username@pc_name:~$ ssh ubuntu@192.168.YY.YY
-turtlebot@192.168.10.11’s password:
+turtlebot@192.168.YY.YY’s password:
 
 ...
 
-Last login: [曜日] [月] [日] XX:XX:XX 2021 from 192.168.XX.XX
+Last login: [曜日] [月] [日] XX:XX:XX 2022 from 192.168.XX.XX
 turtlebot@turtlebot:~$
 ```
 
@@ -139,8 +139,9 @@ turtlebot@turtlebot:~$
 $ roslaunch turtlebot3_bringup turtlebot3_robot.launch
 ```
 <!-- !!!!!! 2021/12/27 ここまで実施 -->
- 
-TurtleBot3のモデルが`burger`の場合は、以下のようなメッセージが表示されます。
+
+以下のようなメッセージが表示されます。
+(IPアドレスなどは環境によって異なる可能性があります)
 
 ```shell
 SUMMARY
@@ -213,12 +214,14 @@ process[turtlebot3_diagnostics-3]: started with pid [14200]
 **リモートPCで** robot state publisherとRVizを実行します。
 新しいターミナルウィンドウを開き、以下のコマンドを入力します。
 
+**`【リモートPCで実施】`**
 ``` bash
 $ roslaunch turtlebot3_bringup turtlebot3_remote.launch
 ```
 
 新しいターミナルウィンドウを開き、以下のコマンドを入力します。   
 
+**`【リモートPCで実施】`**
 ```bash
 $ rosrun rviz rviz -d `rospack find turtlebot3_description`/rviz/model.rviz
 ```
@@ -240,6 +243,7 @@ $ rosrun rviz rviz -d `rospack find turtlebot3_description`/rviz/model.rviz
 
 **リモートPCで**新しいターミナルウィンドウを開き、以下のコマンドを入力します。
 
+**`【リモートPCで実施】`**
 ``` bash
 $ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 ```
@@ -266,6 +270,7 @@ $ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 動作確認が終わりましたら一旦全てのノードを終了させます。
 下記のコマンドで`roscore`以外のノードを終了させることができます。
 
+**`【リモートPCで実施】`**
 ```shell
 rosnode kill -a
 ```
@@ -282,12 +287,43 @@ done
 username@pcname:~/catkin_ws$
 ```
 
-TurtleBot33のアプリケーションを起動するために開いたターミナルで`exit`を記入し、`Enter`{: style="border: 1px solid black" }キーを押すと接続を切断します。
+TurtleBot3のアプリケーションを起動するために開いたターミナルで`exit`を記入し、`Enter`{: style="border: 1px solid black" }キーを押すと接続を切断します。
 
+**`【リモートPCからログインしたSBCで実施】`**
 ```shell
 turtlebot@turtlebot:~$ exit
 username@pc_name:~$
 ```
+
+### Topicのモニタ(ご参考)
+TurtleBot3のトピックを確認するために、ROSが提供するrqtを使用します。
+rqtはすべてのトピックを表示することで、トピックのステータスを簡単に確認できるようにするツールです。
+
+`roscore`が動作していることを確認後、以下のコマンドを使用して、PCからrqtを実行します。トピックモニターウィンドウが表示されない場合は、`plugin`{: style="border: 1px solid black" }->`Topics`{: style="border: 1px solid black" }->`Topic Monitor`{: style="border: 1px solid black" }を選択します。
+
+**`【リモートPCで実施】`**
+```shell
+$ rqt
+```
+(起動時にターミナルにERRORが表示されることがありますが、rqtは起動するようです)
+
+前項のようにTurtlebot3が動作している場合、以下のような表示になります。
+
+![topic monitor list](images/seminar_no139/turtlebot_basics_topic_monitor_list.png)
+
+トピックモニターが起動しても、トピック値はモニターされません。各トピックの横にあるチェックボックスをクリックして、トピックのモニターを開始します。
+
+![topic monitor checkbox](images/seminar_no139/turtlebot_basics_topic_monitor_checkbox.png)
+
+より詳細なトピックメッセージを表示するには、チェックボックスの横にあるアイコン▶をクリックします。
+
+![topic monitor detail](images/seminar_no139/turtlebot_basics_topic_monitor_detail.png)
+
+例えば、`/battery_state`{: style="border: 1px solid black" }は、現在のバッテリー電圧や残量など、バッテリーの状態を表示します。
+
+![topic monitor battery state](images/seminar_no139/turtlebot_basics_topic_monitor_battery_state.png)
+
+このようにrqtでトピックを表示することで、デバッグなどへの活用が可能となります。
 
 <button type="button" class="bth btn-primary btn-lg">[
     <span style="color:black">**メインページへ**</span>](index.html)</button>
