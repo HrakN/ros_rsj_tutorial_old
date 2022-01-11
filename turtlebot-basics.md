@@ -81,7 +81,7 @@ $ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 
 <span style="color:red">下記の実習を行うために、まず`ROS_MASTER_URI`と`ROS_HOSTNAME`の`localhost`をリモートPCのIPアドレスに変更します。(下図参照)</span>
 
-![リモートPCのROS_MASTER_URI/ROS_HOSTNAME設定](images/seminar_no139/turtlebotbasics_remotepc_rosenv.png)
+![リモートPCのROS_MASTER_URI/ROS_HOSTNAME設定](images/seminar_no139/turtlebot_basics_remotepc_rosenv.png)
 
 
 ### TurtleBotをリモートPCで表示
@@ -138,7 +138,6 @@ turtlebot@turtlebot:~$
 ``` bash
 $ roslaunch turtlebot3_bringup turtlebot3_robot.launch
 ```
-<!-- !!!!!! 2021/12/27 ここまで実施 -->
 
 以下のようなメッセージが表示されます。
 (IPアドレスなどは環境によって異なる可能性があります)
